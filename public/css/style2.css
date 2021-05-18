@@ -1,0 +1,196 @@
+body, html{
+    font-family: system-ui;
+    background-color: #eff5fe;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drop-zone{
+    width: 500px;
+    min-height: 200px;
+    border: 2px dashed #0288d147;
+    margin: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.upload-container{
+    background-color: #ffffff;
+    border-radius: 25px;
+    box-shadow: 0px 20px 20px #0000002e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.icon-container img{
+    width: 75px;
+    position: absolute;
+    transition: transform 250ms ease-in-out;
+}
+
+.icon-container .center{
+    z-index: 2;
+}
+
+.icon-container{
+    position: relative;
+    width: 75px; 
+    height: 100px;
+}
+
+
+.icon-container .right, .icon-container .left{
+    filter: grayscale(.5);
+    transform: scale(.8);
+}
+
+.dragged .icon-container .right{
+    transform: rotate(35deg) translateX(25px);
+    transform-origin: bottom;
+}
+
+.dragged .icon-container .left{
+    transform: rotate(-35deg) translateX(-25px);
+    transform-origin: bottom;
+}
+
+.dragged .icon-container .center{
+    transform: translateY(-20px);
+}
+
+.dragged.drop-zone{
+    background-color: #eff5fe;
+    border-color: blue;
+}
+
+#input{
+    display: none;
+}
+
+.browse{
+    color: blue;
+    cursor: pointer;
+}
+
+.progress{
+    width: 500px;
+    height: 20px;
+    border: 2px solid #0288d147;
+    margin-bottom: 25px;
+    border-radius: 10px;
+}
+
+.bgProgress{
+    width: 0%;
+    height: 100%;
+    background-color: #eff5fe;
+    /* transform: scaleX(0.01); */
+    transform-origin: left;
+    transition: width .25s linear;
+}
+
+.percent{
+    margin-bottom: 20px;
+}
+
+.progressSection{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: none;
+}
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 150px;
+  }
+.share{
+    width: 500px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.share .inputContainer input{
+    width: 100%;
+    border: 2px dashed #0288d147;
+    border-radius: 5px;
+    padding: 10px 10px 15px 15px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background-color: #eff5fe;
+}
+
+.expire{
+    text-align: center;
+}
+.share .inputContainer{
+    position: relative;
+}
+.inputContainer img{
+    position: absolute;
+    height: 16px;
+    width: 20px;
+    right: 05px;
+    top: 15px;
+    background-color: #eff5fe;
+    cursor: pointer;
+}
+
+.email{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.email form{
+    width: 100%;
+    border: 2px solid #0288d147;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    flex-direction: column;
+}
+
+.email .field{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.email input{
+    border: none;
+    border-bottom: 2px solid #0288d147;
+    text-align: center;
+
+}
+
+.email input:focus{
+    outline: none;
+}
+
+.email button{
+    padding: 8px 40px;
+    margin-top: 15px;
+    font-size: 15px;
+    background-color: #eff5fe;
+    border: none;
+    border-radius: 10px;
+    color: #607d8b;
+}

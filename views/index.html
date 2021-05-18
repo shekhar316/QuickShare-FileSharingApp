@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickShare</title>
+    <link rel="stylesheet" href="/css/style2.css">
+</head>
+
+
+
+<body>
+    <img src="/img/logo.png" alt="Inshare logo" class="logo">
+    <section class="upload-container">
+        <div class="drop-zone">
+            <div class="icon-container">
+                <img src="/img/upload.png" class = "center" alt="upload file" draggable="false">
+                <img src="/img/upload.png" class = "left" alt="upload file" draggable="false">
+                <img src="/img/upload.png" class = "right" alt="upload file" draggable="false">
+            </div>
+           
+            <div class="title">Drop your files here, or <span class="browse">browse</span></div>
+            <input type="file" id="input">
+        </div>
+
+        <section class="progressSection">
+            <div class="progress">
+                <div class="bgProgress">
+                </div>
+                
+            </div>
+            <div class="title">Uploading ...</div>
+            <div class="percent"><span id="per">0</span>%</div>
+        </section>
+
+        <div class="share">
+            <p class="expire">Link expires in 24 hours.</p>
+            <div class="inputContainer">
+                <input type="text" class="URLLink" readonly>
+                <img src="/img/copy.svg" alt="copy" id="copyBTN">
+            </div>
+
+            <p class="expire">Or send via email.</p>
+            <div class="email">
+                <form id="EmailForm">
+                    <div class="field">
+                        <label for="sender">Your Email</label>
+                        <input type="email" required name="fromEmail" id="sender">
+                    </div>
+                    <div class="field">
+                        <label for="receiver">Receiver's Email</label>
+                        <input type="email" required name="toEmail" id="receiver">
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+<script>    
+const dropZone = document.querySelector(".drop-zone");
+const URLLink = document.querySelector(".URLLink");
+const share = document.querySelector(".share");
+const copyBTN = document.querySelector("#copyBTN");
+
+copyBTN.addEventListener("click", ()=> {
+    URLLink.select();
+    document.execCommand("copy");
+})
+
+dropZone.addEventListener("dragover", (e) =>{
+    e.preventDefault();
+
+    if(!dropZone.classList.contains("dragged")){
+        dropZone.classList.add("dragged");
+    }
+});
+
+dropZone.addEventListener("dragleave", (e) =>{
+    e.preventDefault();
+    dropZone.classList.remove("dragged");
+});
+
+dropZone.addEventListener("drop", (e) =>{
+    e.preventDefault();
+    dropZone.classList.remove("dragged");
+    const files = e.dataTransfer.files;
+    console.log(files);
+    if(files.length){
+        input.files = files;
+        uploadFile();
+    }
+});
+
+const browse = document.querySelector(".browse");
+const input = document.querySelector("#input");
+
+
+browse.addEventListener("click", ()=> {
+    input.click();
+})
+
+input.addEventListener("change", ()=>{
+    uploadFile();
+})
+
+
+const host = "http://localhost:8080";
+const upURL = `${host}/api/files`;
+// const emailURL = `${host}/api/files`;
+
+
+const uploadFile = ()=>{
+    const file = input.files[0];
+    const formData = new FormData();
+    formData.append('myFile', file);
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState ===XMLHttpRequest.DONE){
+            // console.log(xhr.response);
+            showLink(JSON.parse(xhr.response));
+        }
+    }
+
+    xhr.upload.onprogress = updateProgress;
+    xhr.open("POST", upURL);
+    xhr.send(formData);
+    // console.log("uploaded.")
+}
+
+const per = document.querySelector("#per");
+const updateProgress = (e) =>{
+    progressSection.style.display = "flex";
+    const percent = Math.round((e.loaded / e.total) * 100);
+    const bgProgress = document.querySelector(".bgProgress");
+    bgProgress.style.width = `${percent}%`;
+    per.innerText = percent;
+}
+
+const progressSection = document.querySelector(".progressSection");
+
+var uuidURL = "HEllo";
+
+const showLink = ({file : url}) => {
+    progressSection.style.display = "none";
+    var myURL = url;
+    // console.log(myURL);
+    uuidURL = myURL;
+    share.style.display = "block";
+    URLLink.value = myURL;
+}
+// console.log(uuidURL)
+const emailForm = document.querySelector("#EmailForm");
+// const url = URLLink.value;
+const emailURL = `${host}/api/files/send`;
+// console.log(uuidURL.split("/").splice(-1, 1)[0])
+
+emailForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const formData = {
+        "uuid" : uuidURL.split("/").splice(-1, 1)[0],
+        "emailTo" : emailForm.elements["toEmail"].value,
+        "emailFrom" : emailForm.elements["fromEmail"].value
+    }
+    console.table(formData);
+    fetch(emailURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    }).then(res =>  res.json()).then(data => {
+        console.log(data);
+    })
+})
+
+
+
+</script>
