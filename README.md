@@ -6,8 +6,7 @@
 
 > ### Live Demo:
 > [https://quickshareshekhar316.herokuapp.com/](https://quickshareshekhar316.herokuapp.com/)
-> 
-> Disclaimer: This tool is for educational purpose only. Don't misuse it.
+
 
 
 
