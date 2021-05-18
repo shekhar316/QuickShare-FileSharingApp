@@ -30,12 +30,12 @@
 
 ### npm modules used:
 * express
-* mongoose
-* uuid
+* mongoose (for handling database MongoDB Operations)
+* uuid (for creating unique filename)
 * body-parser
 * path
-* nodemailer
-* multer
-* ejs
+* nodemailer (for sending emails using smtp)
+* multer (multer handles file uploading)
+* ejs 
 * cors
 * dotenv
