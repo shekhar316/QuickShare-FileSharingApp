@@ -10,11 +10,13 @@
 
 
 
-
+<br/>
 
 ### QuickShare Usecases:
 
 * In sharing large files which can not be shared using Whatsapp, Gmail etc. 
+
+<br/>
 
 ### File Sharing using QuickShare:
 
@@ -23,10 +25,13 @@
 * Now, simply share link with person whom you want to share.
 * You can also mail the download link to the receiver directly from panel.
 
+<br/>
+
 ### Stack used:
 * NodeJS
 * MongoDB Atlas
 
+<br/>
 
 ### npm modules used:
 * express
